@@ -26,3 +26,9 @@ go.work.sum
 
 # JetBrains IDE specific folder
 .idea/
+
+# MacOS Finder specific files
+**/.DS_Store
+
+# https://github.com/air-verse/air specific folder
+**/tmp/
