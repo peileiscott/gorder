@@ -18,6 +18,7 @@ protoc \
   --go_opt=paths=source_relative \
   --go-grpc_out="$out_dir" \
   --go-grpc_opt=paths=source_relative \
+  --go-grpc_opt=require_unimplemented_servers=false \
   "api/protobuf/$service.proto"
 
 echo "Successfully generated protobuf files for $service service"
