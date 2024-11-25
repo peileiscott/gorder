@@ -60,15 +60,14 @@ func (c *stockServiceClient) CheckItemsInStock(ctx context.Context, in *CheckIte
 }
 
 // StockServiceServer is the server API for StockService service.
-// All implementations must embed UnimplementedStockServiceServer
+// All implementations should embed UnimplementedStockServiceServer
 // for forward compatibility.
 type StockServiceServer interface {
 	GetItems(context.Context, *GetItemsRequest) (*GetItemsResponse, error)
 	CheckItemsInStock(context.Context, *CheckItemsInStockRequest) (*CheckItemsInStockResponse, error)
-	mustEmbedUnimplementedStockServiceServer()
 }
 
-// UnimplementedStockServiceServer must be embedded to have
+// UnimplementedStockServiceServer should be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
@@ -81,8 +80,7 @@ func (UnimplementedStockServiceServer) GetItems(context.Context, *GetItemsReques
 func (UnimplementedStockServiceServer) CheckItemsInStock(context.Context, *CheckItemsInStockRequest) (*CheckItemsInStockResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CheckItemsInStock not implemented")
 }
-func (UnimplementedStockServiceServer) mustEmbedUnimplementedStockServiceServer() {}
-func (UnimplementedStockServiceServer) testEmbeddedByValue()                      {}
+func (UnimplementedStockServiceServer) testEmbeddedByValue() {}
 
 // UnsafeStockServiceServer may be embedded to opt out of forward compatibility for this service.
 // Use of this interface is not recommended, as added methods to StockServiceServer will
