@@ -1,0 +1,130 @@
+openapi: 3.0.0
+info:
+  title: Order service
+  description: Order service
+  version: 1.0.0
+servers:
+  - url: "https://{hostname}/api"
+    variables:
+      hostname:
+        default: 127.0.0.1
+paths:
+  /customers/{customer_id}/orders/{order_id}:
+    get:
+      description: "Get order"
+      parameters:
+        - in: path
+          name: customer_id
+          required: true
+          schema:
+            type: string
+
+        - in: path
+          name: order_id
+          required: true
+          schema:
+            type: string
+
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+        default:
+          description: "Error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /customers/{customer_id}/orders:
+    post:
+      description: "Create order"
+      parameters:
+        - in: path
+          name: customer_id
+          required: true
+          schema:
+            type: string
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateOrderRequest"
+
+      responses:
+        "201":
+          description: "Created"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+        default:
+          description: "Error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+components:
+  schemas:
+    Order:
+      type: object
+      properties:
+        id:
+          type: string
+        customer_id:
+          type: string
+        status:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/Item"
+        payment_link:
+          type: string
+
+    Item:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        quantity:
+          type: integer
+          format: int32
+        price_id:
+          type: string
+
+    CreateOrderRequest:
+      type: object
+      required:
+        - customer_id
+        - items
+      properties:
+        customer_id:
+          type: string
+        items:
+          type: array
+          items:
+              $ref: "#/components/schemas/ItemWithQuantity"
+
+    ItemWithQuantity:
+      type: object
+      properties:
+        id:
+          type: string
+        quantity:
+          type: integer
+          format: int32
+
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
