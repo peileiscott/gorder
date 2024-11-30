@@ -14,10 +14,8 @@ mkdir -p "$out_dir"
 
 protoc \
   --proto_path="api/protobuf" \
-  --go_out="$out_dir" \
-  --go_opt=paths=source_relative \
-  --go-grpc_out="$out_dir" \
-  --go-grpc_opt=paths=source_relative \
+  --go_out="$out_dir" --go_opt=paths=source_relative \
+  --go-grpc_out="$out_dir" --go-grpc_opt=paths=source_relative \
   --go-grpc_opt=require_unimplemented_servers=false \
   "api/protobuf/$service.proto"
 

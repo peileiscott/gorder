@@ -16,18 +16,9 @@ type InMemoryRepository struct {
 }
 
 func NewInMemoryRepository() *InMemoryRepository {
-	fakeOrders := []*domain.Order{
-		{
-			ID:          "fakeID",
-			CustomerID:  "fakeCustomerID",
-			Status:      "fakeStatus",
-			Items:       nil,
-			PaymentLink: "fakePaymentLink",
-		},
-	}
 	return &InMemoryRepository{
 		lock:  &sync.RWMutex{},
-		store: fakeOrders,
+		store: make([]*domain.Order, 0),
 	}
 }
 

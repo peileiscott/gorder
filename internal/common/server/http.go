@@ -6,7 +6,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-func RunHTTPServer(serviceName string, wrapper func(router *gin.Engine)) {
+func RunHTTPServer(serviceName string, wrapper func(*gin.Engine)) {
 	addr := viper.Sub(serviceName).GetString("http-addr")
 	if addr == "" {
 		logrus.Panicf("please provide http-addr for %s service in internal/common/config/global.yaml", serviceName)
@@ -14,7 +14,7 @@ func RunHTTPServer(serviceName string, wrapper func(router *gin.Engine)) {
 	RunHTTPServerOnAddr(addr, wrapper)
 }
 
-func RunHTTPServerOnAddr(addr string, wrapper func(router *gin.Engine)) {
+func RunHTTPServerOnAddr(addr string, wrapper func(*gin.Engine)) {
 	apiRouter := gin.New()
 	wrapper(apiRouter)
 	apiRouter.Group("/api")

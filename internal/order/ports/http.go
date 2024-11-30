@@ -1,10 +1,10 @@
 package ports
 
 import (
-	"github.com/peileiscott/gorder/common/genproto/orderpb"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/peileiscott/gorder/common/genproto/orderpb"
 	"github.com/peileiscott/gorder/order/app"
 	"github.com/peileiscott/gorder/order/app/command"
 	"github.com/peileiscott/gorder/order/app/query"
@@ -30,7 +30,7 @@ func (s HTTPServer) PostCustomersCustomerIdOrders(c *gin.Context, customerId str
 		Items:      req.Items,
 	})
 	if err != nil {
-		c.JSON(http.StatusOK, gin.H{"error": err})
+		c.JSON(http.StatusOK, gin.H{"error": err.Error()})
 	}
 
 	c.JSON(http.StatusOK, gin.H{
@@ -46,7 +46,7 @@ func (s HTTPServer) GetCustomersCustomerIdOrdersOrderId(c *gin.Context, customer
 		OrderID:    orderID,
 	})
 	if err != nil {
-		c.JSON(http.StatusOK, gin.H{"error": err})
+		c.JSON(http.StatusOK, gin.H{"error": err.Error()})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"message": "success", "data": order})

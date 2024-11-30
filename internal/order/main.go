@@ -28,8 +28,8 @@ func main() {
 
 	app := service.NewApplication(ctx)
 
-	go server.RunGRPCServer(serviceName, func(server *grpc.Server) {
-		orderpb.RegisterOrderServiceServer(server, ports.NewGRPCServer(app))
+	go server.RunGRPCServer(serviceName, func(s *grpc.Server) {
+		orderpb.RegisterOrderServiceServer(s, ports.NewGRPCServer(app))
 	})
 
 	server.RunHTTPServer(serviceName, func(router *gin.Engine) {

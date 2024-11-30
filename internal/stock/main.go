@@ -30,8 +30,8 @@ func main() {
 
 	switch serverType {
 	case "grpc":
-		server.RunGRPCServer(serviceName, func(server *grpc.Server) {
-			stockpb.RegisterStockServiceServer(server, ports.NewGRPCServer(app))
+		server.RunGRPCServer(serviceName, func(s *grpc.Server) {
+			stockpb.RegisterStockServiceServer(s, ports.NewGRPCServer(app))
 		})
 	default:
 		panic("unsupported server type")

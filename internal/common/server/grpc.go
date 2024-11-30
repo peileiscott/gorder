@@ -16,7 +16,7 @@ func init() {
 	grpclogrus.ReplaceGrpcLogger(logrus.NewEntry(logger))
 }
 
-func RunGRPCServer(serviceName string, registerServer func(server *grpc.Server)) {
+func RunGRPCServer(serviceName string, registerServer func(*grpc.Server)) {
 	addr := viper.Sub(serviceName).GetString("grpc-addr")
 	if addr == "" {
 		logrus.Panicf("please provide grpc-addr for %s service in internal/common/config/global.yaml", serviceName)
@@ -24,7 +24,7 @@ func RunGRPCServer(serviceName string, registerServer func(server *grpc.Server))
 	RunGRPCServerOnAddr(addr, registerServer)
 }
 
-func RunGRPCServerOnAddr(addr string, registerServer func(server *grpc.Server)) {
+func RunGRPCServerOnAddr(addr string, registerServer func(*grpc.Server)) {
 	logrusEntry := logrus.NewEntry(logrus.StandardLogger())
 	grpcServer := grpc.NewServer(
 		grpc.ChainUnaryInterceptor(
