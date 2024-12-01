@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/peileiscott/gorder/common/config"
+	"github.com/peileiscott/gorder/common/discovery"
 	"github.com/peileiscott/gorder/common/genproto/orderpb"
 	"github.com/peileiscott/gorder/common/server"
 	"github.com/peileiscott/gorder/order/ports"
@@ -28,6 +29,14 @@ func main() {
 
 	app, cleanup := service.NewApplication(ctx)
 	defer cleanup()
+
+	deregisterFunc, err := discovery.RegisterToConsul(serviceName)
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	defer func() {
+		_ = deregisterFunc()
+	}()
 
 	go server.RunGRPCServer(serviceName, func(s *grpc.Server) {
 		orderpb.RegisterOrderServiceServer(s, ports.NewGRPCServer(app))

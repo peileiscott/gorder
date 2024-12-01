@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/peileiscott/gorder/common/config"
+	"github.com/peileiscott/gorder/common/discovery"
 	"github.com/peileiscott/gorder/common/genproto/stockpb"
 	"github.com/peileiscott/gorder/common/server"
 	"github.com/peileiscott/gorder/stock/ports"
@@ -27,6 +28,14 @@ func main() {
 	defer cancel()
 
 	app := service.NewApplication(ctx)
+
+	deregisterFunc, err := discovery.RegisterToConsul(serviceName)
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	defer func() {
+		_ = deregisterFunc()
+	}()
 
 	switch serverType {
 	case "grpc":
