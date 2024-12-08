@@ -2,10 +2,11 @@ package adapters
 
 import (
 	"context"
-	"github.com/peileiscott/gorder/stock/domain"
 	"sync"
 
 	"github.com/peileiscott/gorder/common/genproto/orderpb"
+	"github.com/peileiscott/gorder/stock/domain"
+	"github.com/sirupsen/logrus"
 )
 
 type MemoryStockRepository struct {
@@ -39,5 +40,8 @@ func (m MemoryStockRepository) GetItems(ctx context.Context, itemIDs []string) (
 		return nil, domain.ItemNotFoundError{ItemIDs: missingItemIDs}
 	}
 
+	logrus.WithFields(logrus.Fields{
+		"items": items,
+	}).Debug("MemoryStockRepository.GetItems")
 	return items, nil
 }
