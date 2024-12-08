@@ -11,7 +11,7 @@ import (
 func RunGRPCServer(serviceName string, registerServer func(*grpc.Server)) {
 	addr := viper.Sub(serviceName).GetString("grpc_addr")
 	if addr == "" {
-		logrus.Panicf("please provide grpc address for service %s", serviceName)
+		logrus.Panicf("please provide grpc address for %s service", serviceName)
 	}
 	RunGRPCServerOnAddr(addr, registerServer)
 }

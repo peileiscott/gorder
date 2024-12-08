@@ -9,7 +9,7 @@ import (
 func RunHTTPServer(serviceName string, registerHandlers func(*gin.Engine)) {
 	addr := viper.Sub(serviceName).GetString("http_addr")
 	if addr == "" {
-		logrus.Panicf("please provide http address for service %s", serviceName)
+		logrus.Panicf("please provide http address for %s service", serviceName)
 	}
 	RunHTTPServerOnAddr(addr, registerHandlers)
 }
