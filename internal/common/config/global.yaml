@@ -2,3 +2,8 @@ order:
   service_name: order
   http_addr: 127.0.0.1:8081
   grpc_addr: 127.0.0.1:5001
+
+stock:
+  service_name: stock
+  http_addr: 127.0.0.1:8082
+  grpc_addr: 127.0.0.1:5002
