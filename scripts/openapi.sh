@@ -17,8 +17,8 @@ readonly client_out_dir="internal/common/client/$service_name"
 
 mkdir -p "$api_out_dir" "$client_out_dir"
 
-oapi-codegen -config "api/openapi/config.yaml" -generate $server -o "$api_out_dir/api.gen.go" -package ports "$openapi_file"
-oapi-codegen -config "api/openapi/config.yaml" -generate client -o "$client_out_dir/client.gen.go" -package "$service_name" "$openapi_file"
-oapi-codegen -config "api/openapi/config.yaml" -generate types -o "$client_out_dir/types.gen.go" -package "$service_name" "$openapi_file"
+oapi-codegen -config "api/openapi/config.yaml" -generate $server -o "$api_out_dir/openapi_api.gen.go" -package ports "$openapi_file"
+oapi-codegen -config "api/openapi/config.yaml" -generate client -o "$client_out_dir/openapi_client.gen.go" -package "$service_name" "$openapi_file"
+oapi-codegen -config "api/openapi/config.yaml" -generate types -o "$client_out_dir/openapi_types.gen.go" -package "$service_name" "$openapi_file"
 
 echo "Generated openapi files for $service_name service in $client_out_dir and $api_out_dir"
